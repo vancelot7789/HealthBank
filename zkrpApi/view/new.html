@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Third party</title>
+    <style>
+        .flex {
+            display: flex;
+        }
+
+        .item {
+            flex: 1;
+            padding: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex">
+        <div class="item">
+            <h3>用戶合約</h3>
+            <h5 id="contractAddress">合約位址: </h5>
+            <input id="deployedContractAddressInput" type="text" placeholder="請輸入既有合約位址" />
+            <button id="loadDeployedContractButton">載入既有合約位址</button>
+            <button id="deployNewContractButton">部署新合約</button>
+
+            <hr>
+            <h3>帳戶登入</h3>
+            <select id="whoami"></select>
+            <button id="whoamiButton">登入</button>
+            <button id="copyButton">複製</button>
+
+            <hr>
+            <h3 class="qrcode">事件名稱</h3>
+            <input id="eventName" type="text" placeholder="eventName">
+            <button onclick="getEvent()" id="event">生成QR Code</button>
+
+            <hr>
+            <h3 class="qrcode">更新驗證紀錄</h3>
+            <button onclick="getResult()" id="update">更新</button>
+            <hr>
+
+        </div>
+        <div class="item" style="width:500px;">
+            <h3>驗證紀錄</h3>
+            <pre id="logger"></pre>
+        </div>
+    </div>
+
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+    <script type="text/javascript">
+        let logger = $('#logger')
+
+        function log(...inputs) {
+            for (let input of inputs) {
+                if (typeof input === 'object') {
+                    input = JSON.stringify(input, null, 2)
+                }
+                logger.html(input + '\n' + logger.html())
+            }
+        }
+
+        function getEvent() {
+            $.ajax({
+                type: 'get',
+                url: '/event_qr',
+                dataType: 'json',
+                data: {
+                    eventName: $('#eventName').val()
+                },
+                success: function (result) {
+                    //log(result)
+                    $('.qrcode').html('<img src="data:image/png;base64,' + result.qrcode + '" />');
+                }
+            })
+        }
+
+        function getResult() {
+            $.ajax({
+                type: 'get',
+                url: '/result',
+                dataType: 'json',
+                data: {},
+                success: function (result) {
+                    log(result)
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
