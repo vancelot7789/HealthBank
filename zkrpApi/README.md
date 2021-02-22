@@ -11,7 +11,3 @@ $ go build .
 ```
 $ ./zkrpApi
 ```
-
-### API Docs
-
-- [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
