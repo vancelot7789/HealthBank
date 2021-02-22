@@ -1,2 +1,2 @@
-#App
-Install Android Studio to run this Android App
+# App
+Install Android Studio to run this App
