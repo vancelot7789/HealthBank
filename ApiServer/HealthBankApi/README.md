@@ -43,3 +43,11 @@ Use Mongodb as database
     ],
   }
 ```
+## Install required module
+```
+$ npm install
+```
+## Start Server
+```
+$ npm start
+```
